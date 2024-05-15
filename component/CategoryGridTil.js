@@ -1,6 +1,6 @@
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 
-const CategoryGridTil = ({ title, color }) => {
+const CategoryGridTil = ({ title, color, onPressFunc }) => {
   return (
     <View style={styles.gridItem}>
       <Pressable
@@ -9,6 +9,7 @@ const CategoryGridTil = ({ title, color }) => {
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
+        onPress={onPressFunc}
       >
         <View style={[styles.innerContainer, { backgroundColor: color }]}>
           <Text style={styles.title}>{title}</Text>
@@ -31,9 +32,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     backgroundColor: "white",
-    // برای اعمال شادو در ای او اس یا رادیوس در اندروید ما باید بک گراند کالر داشته باشیم
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    // این کار را به این خاطر انجام دادیم که اوور فلو هیدن در ای او اس باعث میشود حتی شادو نیز هیدن شود به این خاطر این کار را فقط برای اندروید انجام میدهیم
   },
   button: {
     flex: 1,

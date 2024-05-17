@@ -1,18 +1,28 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { MEALS } from "../data/dummy-data";
-import { useRoute } from "@react-navigation/native";
+import { CATEGORIES, MEALS } from "../data/dummy-data";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import MealItem from "../component/MealItem";
-const MealsOverviewScreen = ({ route }) => {
-  // کامپوننت های که داخل دات نویگاتور هستند در قسمت پراپس نویگیشن و روت را داخل ابجکت دریافت میکنند که میتوانیم از آنها استفاده کنیم
+import { useLayoutEffect } from "react";
+const MealsOverviewScreen = ({ route, navigation }) => {
   //   const route = useRoute();
-  // این هوک یوز روت نیز همان روت را به ما میدهد منتها در کامپوننت های تو در تویی که روت به انها به عنوان پراپس ارسال نشده نیز میتوانیم از یوز روت استفاده کنیم پس یوز روت بهتر است
 
   const catId = route.params.categoryId;
-  // روت یک چیزی به اسم پارامس به ما میدهد که میتوانیم داده هایی که از آنطرف به این کامپوننت فرستادیم را با آن دریافت کنیم
 
   const displayMeals = MEALS.filter((mealItem) => {
     return mealItem.categoryIds.indexOf(catId) >= 0;
   });
+
+  useLayoutEffect(() => {
+    // یوز لیات افکت همان کار یوز افکت را انجام میدهد منتها یوز افکت بعد از رندر شدن کامپوننت اجرا میشود این یوز لیات افکت سعی میکند قبل از رندر شدن کامپوننت یا حداقل همزمان با رندر شدن کامپونتت اجرا شود
+    const categoryTitle = CATEGORIES.find(
+      (category) => category.id === catId
+    ).title;
+
+    navigation.setOptions({
+      title: categoryTitle,
+    });
+    // نویگیشن دات ست اپشن به ما این امکان را میدهد که استایل دهی به هدر و پس زمینه نویگیشن را اینجا نیز بتوانیم انجام دهیم
+  }, [catId, navigation]);
 
   const renderMealItem = (itemData) => {
     const item = itemData.item;
@@ -22,9 +32,9 @@ const MealsOverviewScreen = ({ route }) => {
       duration: item.duration,
       complexity: item.complexity,
       affordability: item.affordability,
+      id: item.id,
     };
     return <MealItem {...mealItemProps} />;
-    //  میتوانیم به این صورت ابجکتی که بالا ساختیم را تک به تک المان هایش را به عنوان پراپس به این کامپوننت ارسال کنیم
   };
 
   return (

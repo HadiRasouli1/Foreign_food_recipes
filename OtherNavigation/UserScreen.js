@@ -3,7 +3,6 @@ import { View, Text, Button, StyleSheet } from "react-native";
 function UserScreen({ navigation }) {
   const openzDrawerHandler = () => {
     navigation.toggleDrawer();
-    // این عملگری که نویگشن در اختیار ما میگزارد میتواند باعث باز شدن دراور در صفحه شود
   };
   return (
     <View style={styles.rootContainer}>

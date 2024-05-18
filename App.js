@@ -9,15 +9,18 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import WelcomeScreen from "./OtherNavigation/WelcomeScreen";
 import UserScreen from "./OtherNavigation/UserScreen";
 import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
+const BottomTab = createBottomTabNavigator();
+
 export default function App() {
   return (
     <>
-      {/* <StatusBar style="light" />
+      <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -45,11 +48,10 @@ export default function App() {
             // }}
           />
         </Stack.Navigator>
-      </NavigationContainer> */}
+      </NavigationContainer>
 
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <Drawer.Navigator initialRouteName="UserScreen">
-          {/* اینشیال روت نیم به ما اولین کامپوننتی که در اپ رندر میشود را نشان میدهد */}
           <Drawer.Screen
             name="WelcomeScreen"
             component={WelcomeScreen}
@@ -63,9 +65,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <Ionicons name="home" color={color} size={size} />
               ),
-              // دراور ایکون به ما یک فانکشنی میدهد که در ان میتواند ایکون مورد نظر را قرار دهیم که البته پراپس هایی مثل رنگ و سایز ایکون را نیز در اختیارمان قرار میدهد
             }}
-            // در قسمت اپشن همانند قبلی میتوانند تمامی قسمت های نویگیتور را شخصی سازی کرد
           />
           <Drawer.Screen
             name="UserScreen"
@@ -77,9 +77,39 @@ export default function App() {
             }}
           />
         </Drawer.Navigator>
+      </NavigationContainer> */}
+
+      <NavigationContainer>
+        <BottomTab.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: "#3c0a6b" },
+            headerTintColor: "white",
+            tabBarActiveTintColor: "#3c0a6b",
+          }}
+        >
+          <BottomTab.Screen
+            name="WelcomeScreen"
+            component={WelcomeScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="home" color={color} size={size} />
+              ),
+            }}
+            // این نیز اسم  متفاوتی برای تنظیم ایکون دارد ولی همان کار قبلی را میکند و به ما پراپس هایی مثل سایز و رنگ میدهد
+          />
+          <BottomTab.Screen
+            name="UserScreen"
+            component={UserScreen}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="person" color={color} size={size} />
+              ),
+            }}
+            //
+          />
+        </BottomTab.Navigator>
       </NavigationContainer>
-      {/* در این قسمت از یک نویگیتور جدید به اسم دراور استفاده کردیم که البته انرا در پروژه نصب کردیم و بعد در بالا با استفاده از کریت دراور       نویگیتور آنرا ایمپورت کردیم*/}
-      {/* بقیه قسمت ها مثل نویگیتور قبلی است یعنی باز نویگیشون کنتینور میخواهیم که از که از ری اکت نویگیشن ایمپورت میکنیم و ...مثل همان است */}
+      {/* میتوانیم ازین نوع نویگیتور نیز استفاده کنیم مثل قبلی ها */}
     </>
   );
 }

@@ -10,12 +10,49 @@ import WelcomeScreen from "./OtherNavigation/WelcomeScreen";
 import UserScreen from "./OtherNavigation/UserScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FavoritesScreen from "./screens/FavoritesScreen";
 
 const Stack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
-const BottomTab = createBottomTabNavigator();
+// const BottomTab = createBottomTabNavigator();
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#3f2f25" },
+        drawerContentStyle: { backgroundColor: "#351401" },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#351401",
+        drawerActiveBackgroundColor: "#e4baa1",
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => {
+            return <Ionicons name="list" color={color} size={size} />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => {
+            return <Ionicons name="star" color={color} size={size} />;
+          },
+        }}
+      />
+    </Drawer.Navigator>
+  );
+  // ما میتوانیم به این صورت در قسمت ریترن یک فانکشن یک نویگیتور استفاده کنیم و اسم این فانکشن را به قسمت کامپوننت یک نویگیتور دیگر بدهیم تا به این صورت بتوانیم از نویگیتور های تو در تو استفاده کنیم
+};
 
 export default function App() {
   return (
@@ -31,21 +68,21 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerNavigator}
+            // در این قسمت اسم فانکشنی که داخلش نویگتور دیگر نوشته شده را مینویسیم تا بدین صورت بتوان از نویگتور های تو در تو استفاده کرد
             options={{
-              title: "All Categories",
+              headerShown: false,
+              // این کد نیز قسمت هدر این اسکرین را حذف میکند زیرا نمیخواهیم همزمان دو هدر با دوتا تایتل داشته باشیم
             }}
           />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
           <Stack.Screen
             name="DetailsMealOverview"
             component={DetailMealsOverviewScreen}
-            // options={{
-            //   headerRight:()=>{
-            //     return <Button title="Tap Me !"/>
-            //   }
-            // }}
+            options={{
+              title: "about meal",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -79,7 +116,7 @@ export default function App() {
         </Drawer.Navigator>
       </NavigationContainer> */}
 
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <BottomTab.Navigator
           screenOptions={{
             headerStyle: { backgroundColor: "#3c0a6b" },
@@ -95,7 +132,6 @@ export default function App() {
                 <Ionicons name="home" color={color} size={size} />
               ),
             }}
-            // این نیز اسم  متفاوتی برای تنظیم ایکون دارد ولی همان کار قبلی را میکند و به ما پراپس هایی مثل سایز و رنگ میدهد
           />
           <BottomTab.Screen
             name="UserScreen"
@@ -108,8 +144,7 @@ export default function App() {
             //
           />
         </BottomTab.Navigator>
-      </NavigationContainer>
-      {/* میتوانیم ازین نوع نویگیتور نیز استفاده کنیم مثل قبلی ها */}
+      </NavigationContainer> */}
     </>
   );
 }

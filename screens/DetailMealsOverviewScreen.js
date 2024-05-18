@@ -1,11 +1,20 @@
 import { useRoute } from "@react-navigation/native";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { MEALS } from "../data/dummy-data";
 import MealDetails from "../component/MealDetails";
 import Subtitle from "../component/MealDetail/Subtitle";
 import List from "../component/MealDetail/List";
+import { useLayoutEffect } from "react";
+import IconButton from "../component/IconButton";
 
-const DetailMealsOverviewScreen = () => {
+const DetailMealsOverviewScreen = ({ navigation }) => {
   const route = useRoute();
   const MealIds = route.params.MealId;
 
@@ -16,6 +25,24 @@ const DetailMealsOverviewScreen = () => {
     complexity: selectedMeal.complexity,
     affordability: selectedMeal.affordability,
   };
+
+  const headerButtonPressHandler = () => {
+    console.log("pressed!");
+  };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <IconButton
+            onPressFunc={headerButtonPressHandler}
+            icon="star"
+            color="white"
+          />
+        );
+      },
+    });
+    // هدر رایتی که داخل اپشن های این نویگیتور است به ما این امکان را میدهد که در طرف راست هدر هر چیزی که دلمان میخواهد را اد کنیم و در واقع چیزی که این اپشن در ریترن میدهد یک کامپوننت است که در قسمت راست هدر قرار داده میشود همینطور میتوان به قسمت چپ نیز اضافه کرد البته میتوانستیم در انجا هم استفاده کنیم ولی خواستیم از ست اپشن استفاده کنیم
+  }, [navigation, headerButtonPressHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>

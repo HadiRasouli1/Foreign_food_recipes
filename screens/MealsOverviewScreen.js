@@ -13,7 +13,6 @@ const MealsOverviewScreen = ({ route, navigation }) => {
   });
 
   useLayoutEffect(() => {
-    // یوز لیات افکت همان کار یوز افکت را انجام میدهد منتها یوز افکت بعد از رندر شدن کامپوننت اجرا میشود این یوز لیات افکت سعی میکند قبل از رندر شدن کامپوننت یا حداقل همزمان با رندر شدن کامپونتت اجرا شود
     const categoryTitle = CATEGORIES.find(
       (category) => category.id === catId
     ).title;
@@ -21,7 +20,6 @@ const MealsOverviewScreen = ({ route, navigation }) => {
     navigation.setOptions({
       title: categoryTitle,
     });
-    // نویگیشن دات ست اپشن به ما این امکان را میدهد که استایل دهی به هدر و پس زمینه نویگیشن را اینجا نیز بتوانیم انجام دهیم
   }, [catId, navigation]);
 
   const renderMealItem = (itemData) => {

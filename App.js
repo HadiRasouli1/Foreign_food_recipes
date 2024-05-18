@@ -1,17 +1,23 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { Button, StyleSheet, Text } from "react-native";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import DetailMealsOverviewScreen from "./screens/DetailMealsOverviewScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import WelcomeScreen from "./OtherNavigation/WelcomeScreen";
+import UserScreen from "./OtherNavigation/UserScreen";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
+
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <>
-      <StatusBar style="light" />
+      {/* <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -20,38 +26,60 @@ export default function App() {
             headerTintColor: "white",
             contentStyle: { backgroundColor: "#3f2f25" },
           }}
-          // ما میتوانیم با استفاده از اسکرین اپشن به پس زمینه و هدر نویگیشنی که دیفالت ایجاد شده بود استایل دهی کنیم البته اگر این کار در استک دات نویگیتور انجام بشود در کل اسکرین ها اعمال میشود
-
-          // اولین اسکرین به عنوان اسکرین اصلی به صورت دیفالت در صفحه نمایش داده میشود
         >
           <Stack.Screen
             name="MealsCategories"
             component={CategoriesScreen}
             options={{
               title: "All Categories",
-              // headerStyle: { backgroundColor: "#351401" },
-              // headerTintColor: "white",
-              // contentStyle: { backgroundColor: "#3f2f25" },
-              // میتوان با  استایل دهی به هدر و پس زمینه نویگیشن را این جا مخصوص این اسکرین انجام داد
             }}
           />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            // options={({route,navigation})=>{
-            //   const catId = route.params.title
-            //   return{
-            //       title:catId
-            //   };
-            // }}
-            // میتوان با روت و نویگیشنی که این کامپوننت در اختیار ما میگزارد تایتل مخصوص برای هر اسکرین مجزایی که از این اسکرین رندر میشود را قرار داد منتها این کار را در داخل خود کامپوننت  با یک ابزار دیگر انجام دادیم
-          />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
           <Stack.Screen
             name="DetailsMealOverview"
             component={DetailMealsOverviewScreen}
+            // options={{
+            //   headerRight:()=>{
+            //     return <Button title="Tap Me !"/>
+            //   }
+            // }}
           />
         </Stack.Navigator>
+      </NavigationContainer> */}
+
+      <NavigationContainer>
+        <Drawer.Navigator initialRouteName="UserScreen">
+          {/* اینشیال روت نیم به ما اولین کامپوننتی که در اپ رندر میشود را نشان میدهد */}
+          <Drawer.Screen
+            name="WelcomeScreen"
+            component={WelcomeScreen}
+            options={{
+              headerStyle: { backgroundColor: "#3c0a6b" },
+              headerTintColor: "white",
+              drawerLabel: "welcome Screen",
+              drawerActiveBackgroundColor: "#f0e1ff",
+              drawerInactiveTintColor: "#3c0a6b",
+              drawerStyle: { backgroundColor: "#fff" },
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="home" color={color} size={size} />
+              ),
+              // دراور ایکون به ما یک فانکشنی میدهد که در ان میتواند ایکون مورد نظر را قرار دهیم که البته پراپس هایی مثل رنگ و سایز ایکون را نیز در اختیارمان قرار میدهد
+            }}
+            // در قسمت اپشن همانند قبلی میتوانند تمامی قسمت های نویگیتور را شخصی سازی کرد
+          />
+          <Drawer.Screen
+            name="UserScreen"
+            component={UserScreen}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name="person" color={color} size={size} />
+              ),
+            }}
+          />
+        </Drawer.Navigator>
       </NavigationContainer>
+      {/* در این قسمت از یک نویگیتور جدید به اسم دراور استفاده کردیم که البته انرا در پروژه نصب کردیم و بعد در بالا با استفاده از کریت دراور       نویگیتور آنرا ایمپورت کردیم*/}
+      {/* بقیه قسمت ها مثل نویگیتور قبلی است یعنی باز نویگیشون کنتینور میخواهیم که از که از ری اکت نویگیشن ایمپورت میکنیم و ...مثل همان است */}
     </>
   );
 }

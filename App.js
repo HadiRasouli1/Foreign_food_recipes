@@ -11,6 +11,7 @@ import UserScreen from "./OtherNavigation/UserScreen";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoritesScreen from "./screens/FavoritesScreen";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,41 +52,44 @@ const DrawerNavigator = () => {
       />
     </Drawer.Navigator>
   );
-  // ما میتوانیم به این صورت در قسمت ریترن یک فانکشن یک نویگیتور استفاده کنیم و اسم این فانکشن را به قسمت کامپوننت یک نویگیتور دیگر بدهیم تا به این صورت بتوانیم از نویگیتور های تو در تو استفاده کنیم
 };
 
 export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            title: "All Categories",
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            // در این قسمت اسم فانکشنی که داخلش نویگتور دیگر نوشته شده را مینویسیم تا بدین صورت بتوان از نویگتور های تو در تو استفاده کرد
-            options={{
-              headerShown: false,
-              // این کد نیز قسمت هدر این اسکرین را حذف میکند زیرا نمیخواهیم همزمان دو هدر با دوتا تایتل داشته باشیم
+      <FavoritesContextProvider>
+        {/* در این قسمت کانتکسی ساختیم و البته پروایدش را هم داخل این فایل ساختیم دور قسمتی که میخواهیم ازین کانتکست استفاده کنیم میپیچیم  */}
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              title: "All Categories",
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "white",
+              contentStyle: { backgroundColor: "#3f2f25" },
             }}
-          />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
-          <Stack.Screen
-            name="DetailsMealOverview"
-            component={DetailMealsOverviewScreen}
-            options={{
-              title: "about meal",
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen
+              name="Drawer"
+              component={DrawerNavigator}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+            />
+            <Stack.Screen
+              name="DetailsMealOverview"
+              component={DetailMealsOverviewScreen}
+              options={{
+                title: "about meal",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
 
       {/* <NavigationContainer>
         <Drawer.Navigator initialRouteName="UserScreen">

@@ -11,10 +11,13 @@ import { MEALS } from "../data/dummy-data";
 import MealDetails from "../component/MealDetails";
 import Subtitle from "../component/MealDetail/Subtitle";
 import List from "../component/MealDetail/List";
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import IconButton from "../component/IconButton";
-
+import { FavoritesContext } from "../store/context/favorites-context";
 const DetailMealsOverviewScreen = ({ navigation }) => {
+  const favoritesMealsCtx = useContext(FavoritesContext);
+  // استفاده از کانتکت مورد نظر
+
   const route = useRoute();
   const MealIds = route.params.MealId;
 
@@ -25,23 +28,29 @@ const DetailMealsOverviewScreen = ({ navigation }) => {
     complexity: selectedMeal.complexity,
     affordability: selectedMeal.affordability,
   };
+  const mealIsFavorite = favoritesMealsCtx.ids.includes(MealIds);
 
-  const headerButtonPressHandler = () => {
-    console.log("pressed!");
+  const changeFavoriteStatusHandler = () => {
+    if (mealIsFavorite) {
+      favoritesMealsCtx.removeFavorite(MealIds);
+      // استفاده از فانکشن هایی که در کانتکست  درست کردیم
+    } else {
+      favoritesMealsCtx.addFavorite(MealIds);
+    }
   };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
           <IconButton
-            onPressFunc={headerButtonPressHandler}
-            icon="star"
+            onPressFunc={changeFavoriteStatusHandler}
+            icon={mealIsFavorite ? "star" : "star-outline"}
             color="white"
           />
         );
       },
     });
-  }, [navigation, headerButtonPressHandler]);
+  }, [navigation, changeFavoriteStatusHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>

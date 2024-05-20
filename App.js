@@ -12,6 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import FavoritesContextProvider from "./store/context/favorites-context";
+import { Provider } from "react-redux";
+import { store } from "./store/redux/Store";
 
 const Stack = createNativeStackNavigator();
 
@@ -58,8 +60,8 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoritesContextProvider>
-        {/* در این قسمت کانتکسی ساختیم و البته پروایدش را هم داخل این فایل ساختیم دور قسمتی که میخواهیم ازین کانتکست استفاده کنیم میپیچیم  */}
+      {/* <FavoritesContextProvider> */}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -89,7 +91,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoritesContextProvider>
+        </Provider>
+      {/* </FavoritesContextProvider> */}
 
       {/* <NavigationContainer>
         <Drawer.Navigator initialRouteName="UserScreen">

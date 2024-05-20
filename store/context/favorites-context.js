@@ -5,7 +5,6 @@ export const FavoritesContext = createContext({
   addFavorite: (id) => {},
   removeFavorite: (id) => {},
 });
-//  ایجاد کانتکست و دادن مقادیر اولیه به متغیر ها و فانکشن خایی که قرار استفاده بشه
 
 const FavoritesContextProvider = ({ children }) => {
   const [favoriteMealIds, setFavoriteMealIds] = useState([]);
@@ -23,7 +22,6 @@ const FavoritesContextProvider = ({ children }) => {
     addFavorite: addFavorite,
     removeFavorite: removeFavorite,
   };
-  // ریختن داده های مورد نظر به یک اسم و دادن کل ان به کانتکست پروایدر به عنوان پراپس
 
   return (
     <FavoritesContext.Provider value={value}>

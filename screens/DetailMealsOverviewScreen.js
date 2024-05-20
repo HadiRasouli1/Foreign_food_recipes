@@ -14,9 +14,13 @@ import List from "../component/MealDetail/List";
 import { useContext, useLayoutEffect } from "react";
 import IconButton from "../component/IconButton";
 import { FavoritesContext } from "../store/context/favorites-context";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite, removeFavorite } from "../store/redux/favorites";
 const DetailMealsOverviewScreen = ({ navigation }) => {
-  const favoritesMealsCtx = useContext(FavoritesContext);
-  // استفاده از کانتکت مورد نظر
+  // const favoritesMealsCtx = useContext(FavoritesContext);
+
+  const favoriteMealId = useSelector((state) => state.favoriteMeals.ids);
+  const dispatch = useDispatch();
 
   const route = useRoute();
   const MealIds = route.params.MealId;
@@ -28,14 +32,16 @@ const DetailMealsOverviewScreen = ({ navigation }) => {
     complexity: selectedMeal.complexity,
     affordability: selectedMeal.affordability,
   };
-  const mealIsFavorite = favoritesMealsCtx.ids.includes(MealIds);
+  // const mealIsFavorite = favoritesMealsCtx.ids.includes(MealIds);
 
+  const mealIsFavorite = favoriteMealId.includes(MealIds);
   const changeFavoriteStatusHandler = () => {
     if (mealIsFavorite) {
-      favoritesMealsCtx.removeFavorite(MealIds);
-      // استفاده از فانکشن هایی که در کانتکست  درست کردیم
+      // favoritesMealsCtx.removeFavorite(MealIds);
+      dispatch(removeFavorite({ id: MealIds }));
     } else {
-      favoritesMealsCtx.addFavorite(MealIds);
+      // favoritesMealsCtx.addFavorite(MealIds);
+      dispatch(addFavorite({ id: MealIds }));
     }
   };
   useLayoutEffect(() => {

@@ -1,11 +1,10 @@
 {
   "expo": {
-    "name": "RNCourse3",
-    "slug": "RNCourse3",
+    "name": "RNCourse3CrashHandel",
+    "slug": "RNCourse3CrashHandel",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "backgroundColor":"#24180f",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hadiRasouli.Foods"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4d833cfc-03e7-4430-980f-edf8b3317656"
+      }
     }
   }
 }
